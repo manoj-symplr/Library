@@ -1,7 +1,7 @@
 (ns faster.db
   (:require [monger.core :as mg]
             [monger.collection :as mgc]
-            ;[monger.operators :refer ["$set"]]
+            [monger.operators]
             )
   (:import (org.bson.types ObjectId))
   (:gen-class)
@@ -35,11 +35,11 @@
 (defn get-book-by-id [book-id]
   (mgc/find-map-by-id db books-coll (ObjectId. book-id)))
 ;
-;(defn update-book [book-id name status price]
-;  (mc/update-by-id db books-coll (ObjectId. book-id)
-;                   {"$set"{:name name
-;                         :status status
-;                         :price price}}))
+(defn update-book [book-id name status price]
+  (mgc/update-by-id db books-coll (ObjectId. book-id)
+                    {:name name
+                     :status status
+                     :price price}))
 ;
 (defn delete-book-by-id [book-id]
   (mgc/remove-by-id db books-coll (ObjectId. book-id)))
